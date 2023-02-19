@@ -7,6 +7,7 @@ import './Expenses.css';
 
 function Expenses(props) {
   const [filteredYear, setFilteredYear] = useState('2020');
+  const filteredExpenses = props.expenses.filter(expense => expense.date.getFullYear().toString() === filteredYear);
 
   const filterChangeHandler = (selectedYear) => {
     setFilteredYear(selectedYear);
@@ -17,7 +18,13 @@ function Expenses(props) {
     <div>
       <Card className="expenses">
         <ExpensesFilter selected={filteredYear} onChangeFilter={filterChangeHandler} />
-        {props.expenses.map( (item) => <ExpenseItem title={item.title} amount={item.amount} date={item.date} /> )}
+        {filteredExpenses.map( (item) => (
+          <ExpenseItem
+            key={item.id}
+            title={item.title}
+            amount={item.amount}
+            date={item.date} />
+        ))}
       </Card>
     </div>
   );
